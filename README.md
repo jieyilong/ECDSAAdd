@@ -6,6 +6,8 @@
 
 ## Current status
 
+**Branch checkpoint:** this branch saves the integrated slim-cleanup circuit at **2,226,627 T / 1,564,103 measurements / ≤1,899 logical sites**, including the integration repairs after `5ad000f`. Component correctness checks passed; the complete fixed-source build and axiom audit are pending. The prior promoted result remains `d6d6b4f` below. See [this branch’s six-stage breakdown and verification status](docs/EXACT_SLIM_CLEANUP_20261006.md).
+
 The complete exact controlled point-addition circuit is verified at source commit **`d6d6b4f`**. It uses the compressed 512-round Skywalk transcript in Stages 2 and 5, the measured streamed square in Stage 4, and fused output recovery in Stage 6. The original protected public specifications are byte-identical. The proof covers all valid input points, every classical addend, both controls, arbitrary incoming phase, every independent measurement record, and complete work restoration under the original monomial semantics. See [proof scope](docs/PROOF_SCOPE.md).
 
 For a finite addend, the circuit uses **2,227,651 Toffolis / 1,565,127 measurement instructions / ≤1,899 logical sites**. The infinity addend emits an empty circuit. This saves **4,980,215 T (69.09%)** from the original 7,207,866-T baseline. Compared with the previous verified `3425244` checkpoint, exact history compression removes **169 sites** at **+4,760 T / +680 measurements**. The 1,899-site support/allocation ceiling includes resident point/control sites; it is **not a separately measured exact peak-live count**. The Stage 2/5 targets **≤1,297 Q and <600,000 T** remain open.
