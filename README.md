@@ -6,31 +6,29 @@
 
 ## Current status
 
-**Branch checkpoint:** this branch saves the integrated slim-cleanup circuit at **2,226,627 T / 1,564,103 measurements / ≤1,899 logical sites**, including the integration repairs after `5ad000f`. Component correctness checks passed; the complete fixed-source build and axiom audit are pending. The prior promoted result remains `d6d6b4f` below. See [this branch’s six-stage breakdown and verification status](docs/EXACT_SLIM_CLEANUP_20261006.md).
+The complete exact controlled point-addition circuit is verified at source commit **`60debd8`**. Both forward and inverse field kernels use the exact **511-T cleanup** and cost **1,024 T / 1,024 measurements per update**. The protected public specifications are byte-identical. All valid input points, every classical addend, both controls, arbitrary incoming phase, all measurement records and complete work restoration are covered under the original monomial semantics. See [proof scope](docs/PROOF_SCOPE.md).
 
-The complete exact controlled point-addition circuit is verified at source commit **`d6d6b4f`**. It uses the compressed 512-round Skywalk transcript in Stages 2 and 5, the measured streamed square in Stage 4, and fused output recovery in Stage 6. The original protected public specifications are byte-identical. The proof covers all valid input points, every classical addend, both controls, arbitrary incoming phase, every independent measurement record, and complete work restoration under the original monomial semantics. See [proof scope](docs/PROOF_SCOPE.md).
+A finite-addend point addition uses **2,226,627 Toffolis / 1,564,103 measurements / ≤1,899 logical sites**. The infinity addend emits an empty circuit. This saves **1,024 T and 1,024 measurements** from `d6d6b4f`, with the same support/allocation ceiling. Q includes resident point/control sites and is **not a separately measured exact peak-live count**. The Stage 2/5 targets **≤1,297 Q and <600,000 T** remain open.
 
-For a finite addend, the circuit uses **2,227,651 Toffolis / 1,565,127 measurement instructions / ≤1,899 logical sites**. The infinity addend emits an empty circuit. This saves **4,980,215 T (69.09%)** from the original 7,207,866-T baseline. Compared with the previous verified `3425244` checkpoint, exact history compression removes **169 sites** at **+4,760 T / +680 measurements**. The 1,899-site support/allocation ceiling includes resident point/control sites; it is **not a separately measured exact peak-live count**. The Stage 2/5 targets **≤1,297 Q and <600,000 T** remain open.
-
-The CPU-pod `lake --wfail build` passed **3,863 jobs** and the audit passed **1,336 public transitive axiom queries (1,335 distinct declarations)**. All **748 source hashes** matched before and after verification. Timing: **967s build + 194s audit + 1s transition = 1,162s (19m 22s)**. Verifier setup and queue were each 0s; source preparation/transfer was not separately timed. The whitelist contains only `propext`, `Classical.choice`, and `Quot.sound`. Correctness is formal, not sampled; no approximations were introduced. See [full checkpoint evidence](docs/EXACT_COMPRESSED_POINT_20261006.md) and the [previous compact-caller checkpoint](docs/EXACT_COMPACT_CALLER_20261005.md).
+The CPU-pod `lake --wfail build` passed **3,867 jobs** and **1,344 public transitive axiom queries**. All **756 source hashes** matched before and after verification. Timing: **769s build +185s audit =954s (15m 54s)**. Verifier setup and queue were0s; source preparation/transfer was not separately timed. Only `propext`, `Classical.choice`, and `Quot.sound` occurred. No approximation or sampled correctness replacement was introduced. See [this checkpoint’s full evidence and six-stage breakdown](docs/EXACT_SLIM_CLEANUP_20261006.md) and [the previous compressed checkpoint](docs/EXACT_COMPRESSED_POINT_20261006.md).
 
 ### Six-stage decomposition (verified exact checkpoint)
 
 | Stage | Logical Q ceiling, including resident sites | Toffolis | Measurements |
 | --- | ---: | ---: | ---: |
 | 1. Coordinate differences | ≤1,036 | 2,046 | 2,046 |
-| 2. Skywalk-GCD division | ≤1,899 | 1,059,137 | 728,135 |
+| 2. Skywalk-GCD division | ≤1,899 | 1,058,625 | 727,623 |
 | 3. Prepare X workspace | ≤1,036 | 1,023 | 1,023 |
 | 4. Measured streamed modular square | **≤1,297** | **99,902** | **99,382** |
-| 5. Forward multiplication | ≤1,899 | 1,059,138 | 728,136 |
+| 5. Forward multiplication | ≤1,899 | 1,058,626 | 727,624 |
 | 6. Recover output | **≤1,036** | **2,301** | **2,301** |
-| **Six-stage subtotal** | **≤1,899** | **2,223,547** | **1,561,023** |
+| **Six-stage subtotal** | **≤1,899** | **2,222,523** | **1,559,999** |
 | Additional input/corner classification | ≤1,034 | 4,104 | 4,104 |
-| **Complete controlled finite-addend point addition** | **≤1,899** | **2,227,651** | **1,565,127** |
+| **Complete controlled finite-addend point addition** | **≤1,899** | **2,226,627** | **1,564,103** |
 
 Q 是支持/分配证书给出的保守存活上界，**不是精确 peak-live 测量**。Step 4 的证书含 521 个常驻点/控制/分类位置与 776 个工作位置。完整电路 Q 上界仍由乘除阶段决定。表中采用六阶段示意图的概念顺序；源码先做平方减法，再加 `3x_A`，两者在域中可交换。
 
-Step 4 对照前一已证低宽版本 `d477a67`：749,338 →99,902 T，省 **649,436 T（86.67%）**，保持 ≤1,297-site 证书；完整点加相应从 3,393,054 降至 2,743,618 T。较早的 signed-row 版本仍是另一空间/门数取舍：Step 4 82,101 T /2,865 schedule-peak Q，完整点加 2,725,817 T /≤2,994 静态位置。当前完整版本比该历史完整电路少498,166 T；这些独立检查点的资源不能相加。
+Step 4 对照前一已证低宽版本 `d477a67`：749,338 →99,902 T，省 **649,436 T（86.67%）**，保持 ≤1,297-site 证书；完整点加相应从 3,393,054 降至 2,743,618 T。较早的 signed-row 版本仍是另一空间/门数取舍：Step 4 82,101 T /2,865 schedule-peak Q，完整点加 2,725,817 T /≤2,994 静态位置。当前完整版本比该历史完整电路少499,190 T；这些独立检查点的资源不能相加。
 
 Step 6 将取负与 `x_A` 修正合并：受控规范反射 `p−1−X` 后加经典 `x_A+1 mod p`，并精确修正 y。常量加法仍为每段1,023 T，但共享池从1,030位置缩到515位置。Stage6由5,884降至2,301 T（省60.89%），Q证书由≤1,550降至≤1,036；没有把恢复成本转移到乘法阶段。此全点检查点相对88aad07省3,583 T与2,303次测量。公开受控点加规格保持，全部合法点、控制/相位/工作清理均经完整验证。
 

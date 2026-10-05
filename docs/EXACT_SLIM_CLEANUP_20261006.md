@@ -4,9 +4,9 @@ Source checkpoint: `60debd8dd7afc6bb67777dd3b685de6cc1987ade`, including the inv
 
 ## Verification status
 
-The exact 511-Toffoli cleanup, its phase/state restoration, both 1,024-Toffoli forward/inverse field kernels, inverse record alignment, active support and physical relabeling have passed remote Lean checks. The complete selected point circuit is undergoing the fixed-source full build and transitive axiom audit in `slim-offset-full-point-v3`. This branch is not a newly promoted full checkpoint until that attempt passes.
+The exact 511-Toffoli cleanup, its phase/state restoration, both 1,024-Toffoli forward/inverse field kernels, inverse record alignment, active support and physical relabeling have passed remote Lean checks. The complete selected point circuit passed the fixed-source full build and all 1,344 public transitive axiom queries in `slim-offset-full-point-v3`, with all 756 source hashes matching before and after verification. This is now the promoted full checkpoint.
 
-The prior promoted full circuit is `d6d6b4f`: 2,227,651 T, 1,565,127 measurements and ≤1,899 logical sites. Its full build and all 1,336 axiom checks passed. All changes here preserve the original public controlled point-addition specification, arbitrary measurement records, incoming phase, controls and full work restoration. No approximation, shortened GCD horizon or sampled correctness replacement is used.
+The preceding promoted full circuit was `d6d6b4f`: 2,227,651 T, 1,565,127 measurements and ≤1,899 logical sites. Its full build and all 1,336 axiom checks passed. All changes here preserve the original public controlled point-addition specification, arbitrary measurement records, incoming phase, controls and full work restoration. No approximation, shortened GCD horizon or sampled correctness replacement is used.
 
 ## Integrated resource theorems
 
@@ -33,3 +33,5 @@ All Lean execution occurred on the CPU pod. Accepted component attempts include 
 Full attempt v1 failed after 160s because inverse recovery still used the old 512-measurement alignment. The exact repair uses 511 recovery measurements and 253 padding records to align with the 764-record original reference. Full attempt v2 failed after 226s because one active-support theorem still referred to the old cleanup. The new cleanup's support is now included in the old emitted program's support, without admitting descriptor-only ghost sites or widening the allocation. Both failed attempts are retained; neither is credited as full verification.
 
 Attempt v3 contains 756 fixed source/configuration/script hashes and checks all selected public transitive axioms. The protected `ControlledPointAddSpec.lean`, `PointAddSpec.lean` and `AffineFormula.lean` files are byte-identical to the previous checkpoint.
+
+Final full verification: exit 0, 3,867 build jobs; 769s build +185s audit =954s (15m 54s). Verifier setup and queue were each0s; source preparation and transfer were not separately timed. Only propext, Classical.choice and Quot.sound occurred. The protected public specifications remained byte-identical.
